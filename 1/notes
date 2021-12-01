@@ -1,0 +1,11 @@
+loop while not at the end of the buffer
+goto start of line 
+read current number
+delete line
+save in reg a
+go to next line
+save in reg b
+sub b from a
+if positive, add 1 to i
+move reg b into reg a
+check if at end of buffer

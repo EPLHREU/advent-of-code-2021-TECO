@@ -1,0 +1,52 @@
+! aoc1-2 - count how many times a rolling-count-3 number increments from the previous !
+
+! -registers used-      !
+! a : first number      !
+! b : second number     !
+! c : third number      !
+! p : previous sum      !
+! s : current sum       !
+! i : increment counter !
+
+[a[b[c[p[s[i  ! save contents of registers !
+
+0ui  ! set reg i to 0 to start with !
+j    ! jump to start of buffer      !
+
+\uc  ! load first number into reg c !
+l    ! go to next line              !
+\ub  ! load first number into reg b !
+l    ! go to next line              !
+\ua  ! load first number into reg a !
+l    ! go to next line              !
+
+qc+qb+qaup  ! sum first 3 values in reg p !
+
+qbuc  ! rotate reg b into reg c !
+qaub  ! rotate reg a into reg b !
+
+<     ! loop until at end of buffer !
+ \ua  ! load number into reg a      !
+
+ qa+qb+qcus  ! calculate the current sum into reg s !
+
+ qs-qp"g  ! if reg s subtract reg p is greater than zero (meaning the height has increased) !
+  qi+1ui  ! add 1 to the value of reg i                                                     !
+ '        ! end if statement (do nothing if height has decreased)                           !
+
+ :c"e   ! if moving to the next character fails (at the end of the buffer) !
+  1;    ! exit from the main loop                                          !
+ |      ! otherwise                                                        !
+
+  l     ! go to the next line in the buffer !
+  qbuc  ! rotate reg b into reg c           !
+  qaub  ! rotate reg a into reg b           !
+  qsup  ! rotate reg s into reg p           !
+
+ '  ! end if !
+
+>  ! end main loop !
+
+qi=  ! print value of reg i !
+
+]i]s]p]c]b]a  ! replace contents of registers !

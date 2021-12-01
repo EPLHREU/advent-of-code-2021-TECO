@@ -1,0 +1,33 @@
+! aoc1 - count how many times a number increments from the previous !
+
+! -registers used-      !
+! a : first number      !
+! b : second number     !
+! i : increment counter !
+
+[a[b[i  ! save register content !
+
+0ui  ! set reg i to 0 to start with !
+j    ! jump to start of buffer      !
+\ua  ! load first number into reg a !
+
+<     ! loop until at end of buffer   !
+ \ub  ! load second number into reg b !
+
+ qb-qa"g  ! if reg b subtract reg a is greater than zero (meaning the height has increased) !
+  qi+1ui  ! add 1 to the value of reg i                                                     !
+ '        ! end if statement (do nothing if height has decreased)                           !
+
+ :c"e   ! if moving to the next character fails (at the end of the buffer) !
+  1;    ! exit from the main loop                                          !
+ |      ! otherwise                                                        !
+  l     ! go to the next line in the buffer                                !
+  qbua  ! load reg b into reg a                                            !
+ '      ! end if                                                           !
+
+>  ! end main loop !
+
+qi=  ! print value of reg i !
+
+
+]i]b]a  ! return register content !
